@@ -8,6 +8,10 @@
 		<script>
 			(function(){
 				var square = {x: 25,y: 10};
+				var stroke = [
+					{x: 10,y: 10,w: 10,h: 10},
+					{x: 10,y: 50,w: 10,h: 10}
+				];
 				var keyCode = null;
 				function init() {
 					window.requestAnimationFrame(draw);
@@ -22,6 +26,7 @@
 					ctx.fillRect(0,0,canvas.width,canvas.height);
 					ctx.strokeRect(square.x,square.y,10,10);
 					ctx.strokeRect(10,10,10,10);
+					ctx.strokeRect(10,50,10,10);
 					if(keyCode == 39) {
 						square.x = square.x + 1;
 						keyCode = null;
@@ -34,9 +39,23 @@
 						square.y = square.y - 1;
 						keyCode = null;
 					}
-					if(keyCode == 37 && (square.x < 10 || square.x > 20 || square.y < 10 || square.y > 20)) {
+					function c(i){
+						return square.x < stroke[i].x || square.x > stroke[i].x + stroke[i].w || square.y < stroke[i].y || square.y > stroke[i].y + stroke[i].h
+					}
+					function d(){
+						var b;
+						for (var i = 0; i < stroke.length; i++) {
+							if(c(i) === false){
+								return false;
+							}
+						}
+						return true;
+					}
+					b = d();
+					if(keyCode == 37 && d()) {
 						square.x = square.x - 1;
 						keyCode = null;
+						b = true;
 					}
 					window.requestAnimationFrame(draw);
 				}
