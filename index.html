@@ -9,8 +9,9 @@
 			(function(){
 				var square = {x: 25,y: 10};
 				var stroke = [
-					{x: 10,y: 10,w: 10,h: 10},
-					{x: 10,y: 50,w: 10,h: 10}
+					{x: 100,y: 100,w: 10,h: 10},
+					{x: 40,y: 40,w: 10,h: 10},
+					{x: 80,y: 80,w: 10,h: 10}
 				];
 				var keyCode = null;
 				function init() {
@@ -25,41 +26,46 @@
 					ctx.fillStyle = 'white';
 					ctx.fillRect(0,0,canvas.width,canvas.height);
 					ctx.strokeRect(square.x,square.y,10,10);
-					ctx.strokeRect(10,10,10,10);
-					ctx.strokeRect(10,50,10,10);
-					if(keyCode == 39) {
-						square.x = square.x + 1;
-						keyCode = null;
+					for (var i = 0; i < stroke.length; i++)ctx.strokeRect(stroke[i].x,stroke[i].y,stroke[i].w,stroke[i].h);
+					var c = function(i) {
+						return square.x < stroke[i].x - 10 || square.x > stroke[i].x + stroke[i].w || square.y < stroke[i].y - 10 || square.y > stroke[i].y + stroke[i].h;
 					}
-					if(keyCode == 40) {
-						square.y = square.y + 1;
-						keyCode = null;
-					}
-					if(keyCode == 38) {
-						square.y = square.y - 1;
-						keyCode = null;
-					}
-					function c(i){
-						return square.x < stroke[i].x || square.x > stroke[i].x + stroke[i].w || square.y < stroke[i].y || square.y > stroke[i].y + stroke[i].h
-					}
-					function d(){
-						var b;
+					var d = function() {
 						for (var i = 0; i < stroke.length; i++) {
-							if(c(i) === false){
+							if(c(i) === false) {
+								if(square.x > stroke[i].x) {
+									square.x = square.x + 1;
+									square.y = square.y - 1;
+								}
+								if(square.x < stroke[i].x) {
+									square.x = square.x - 1;
+									square.y = square.y + 1;
+								}
 								return false;
 							}
 						}
 						return true;
 					}
-					b = d();
 					if(keyCode == 37 && d()) {
 						square.x = square.x - 1;
 						keyCode = null;
 						b = true;
 					}
+					if(keyCode == 39 && d()) {
+						square.x = square.x + 1;
+						keyCode = null;
+					}
+					if(keyCode == 40 && d()) {
+						square.y = square.y + 1;
+						keyCode = null;
+					}
+					if(keyCode == 38 && d()) {
+						square.y = square.y - 1;
+						keyCode = null;
+					}
 					window.requestAnimationFrame(draw);
 				}
-				init();  /*dasfdf*/
+				init();
 			})(window);
 		</script>
 	</body>
