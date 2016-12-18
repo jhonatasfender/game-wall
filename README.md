@@ -4,14 +4,14 @@ This game and that I was having problems to understand the logic of preventing t
 ## 1. My first logic
 
 * In this first part I put the logic to work only with a brick and going to the left, and the data is fixed.
-```
+```javascript
   if(keyCode == 37 && (square.x < 10 || square.x > 20 || square.y < 10 || square.y > 20)) {
     square.x = square.x - 1;
     keyCode = null;
   }
 ```
 * Now the next step is to prevent the hero or character from crossing the two obstacles placed on the screen, we will put it statically soon we will try to do it dynamically.
-```
+```javascript
   var stroke = [
     {x: 10,y: 10,w: 10,h: 10},
     {x: 10,y: 50,w: 10,h: 10}
@@ -23,7 +23,7 @@ This game and that I was having problems to understand the logic of preventing t
 <h6>Remembering that I have put for now only to the left. And another thing I did not yet set up the logic to find the area of the character, I used with squares so that it could not complicate. It's something my first logic I'm learning.</h6>
   1. Step.
   
-    ```
+    ```javascript
     function c(i){
       return square.x < stroke[i].x || square.x > stroke[i].x + stroke[i].w || 
              square.y < stroke[i].y || square.y > stroke[i].y + stroke[i].h;
@@ -35,7 +35,7 @@ This game and that I was having problems to understand the logic of preventing t
 
     
 * Then I created another function that runs through the bricks I created and checks if the other square is near it.
-```
+```javascript
 function d(){
   var b;
   for (var i = 0; i < stroke.length; i++) {
@@ -47,7 +47,7 @@ function d(){
 }
 ```
 * Depois chamei essa função colocando dentro da variável o valor booleano que a função me retornou, depois disso eu coloco na verificação se é verdadeiro caso seja eu deixo ir para esquerda, caso não seja eu impeço de ir para esquerda.  
-```
+```javascript
 b = d();
 if(keyCode == 37 && d()) {
   square.x = square.x - 1;
